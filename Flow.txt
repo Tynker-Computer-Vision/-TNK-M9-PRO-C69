@@ -1,0 +1,19 @@
+# TA 1 
+1. Write code for Reading the video and capture the first fram of the the video ( Revision )
+2. Set the resolution of the video 
+3. Flip the Camera 
+
+# SA1 same as TA 1
+
+# TA2 
+1. Import the Library
+2. Create Object for Detecting the hand
+3. Detect the hands 
+4. Explain the Fip type  property
+5. print and Understand the hands and it's Landmarks
+
+# TA3
+1. Write code the detect the Single Hand at time
+2. Get the fingers Landmark
+3. Using finger Landmark detect which finger is up
+4. Write Logic to show which finger is up

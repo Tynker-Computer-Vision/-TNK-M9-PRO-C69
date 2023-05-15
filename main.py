@@ -16,25 +16,43 @@ while True:
 
     try:
         # Get a single capture from the camera
-        success, cameraFeedImg = cap.read()
+        readVideo = cap.read()
+        check = readVideo[0]
+        cameraFeedImg= readVideo[1]
+
         cameraFeedImg = cv2.flip(cameraFeedImg, 1)
 
         # Detect hand in cameraFeedImg
-        hands, cameraFeedImg = detector.findHands(
-            cameraFeedImg, flipType=False)
+        handsDetector = detector.findHands(cameraFeedImg, flipType=False)
+        hands = handsDetector[0]
+        cameraFeedImg = handsDetector[1]
 
         if hands:
             # Hand 1
             hand1 = hands[0]
             lmList1 = hand1["lmList"]  # List of 21 Landmark points
-            bbox1 = hand1["bbox"]  # Bounding box info x,y,w,h
-            centerPoint1 = hand1['center']  # center of the hand cx,cy
             handType1 = hand1["type"]  # Handtype Left or Right
             fingers1 = detector.fingersUp(hand1)
-            indexFingerTop = lmList1[8]
-            indexFingerBottom = lmList1[6]
 
-            print(fingers1)
+            currentFingerUp = ""
+        
+            if fingers1[0]== 1:
+                currentFingerUp="Thumb"
+            elif fingers1[1] == 1:
+                currentFingerUp = "Index Finger"
+            elif fingers1[2] == 1:
+                currentFingerUp = "Middle Finger"
+            elif fingers1[3] == 1:
+                currentFingerUp = "Ring Finger"
+            elif fingers1[4] == 1:
+                currentFingerUp = "Little Finger"
+            else:
+                currentFingerUp = ""
+
+     
+            cv2.putText(cameraFeedImg, handType1 + " : " + currentFingerUp , (75, 90),
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
+
 
     except Exception as e:
         print(e)
